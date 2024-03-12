@@ -7,36 +7,35 @@ using System.Web;
 
 namespace PizzeriaInForno.Models
 {
-    public class Prodotto
+    public class Product
     {
         [Key]
-        public int ProdottoId { get; set; }
+        public int ProductId { get; set; }
 
         [Required]
         [StringLength(255, ErrorMessage = "Max 255 caratteri")]
-        public string NomeProdotto { get; set; }
+        public string ProductName { get; set; }
 
         [Required]
         [StringLength(1000, ErrorMessage = "Max 1000 caratteri")]
-        public string FotoProdotto { get; set; }
+        public string ProductPhone { get; set; }
 
         [Required]
-        [Column(TypeName = "decimal(4,2)")]
         [Range(1, 99, ErrorMessage = "Scegli un prezzo da 1€ a 99€")]
-        public decimal PrezzoProdotto { get; set; }
+        public decimal ProductPrice { get; set; }
 
         [Required]
         [StringLength(50, ErrorMessage = "Max 50 caratteri")]
-        public string TempoDiPreparazione { get; set; }
+        public string PreparationTime { get; set; }
 
         [Required]
         [StringLength(1000, ErrorMessage = "Max 1000 caratteri")]
-        public string Ingredienti {  get; set; }
+        public string Ingredients {  get; set; }
 
         [Required]
         [StringLength(255, ErrorMessage = "Devi scegliere una categoria!")]
-        public string Categoria { get; set; }
+        public string Category { get; set; }
 
-        public OrdineItem OrdineItem { get; set; }
+        public ICollection<OrderItem> OrderItems { get; set; }
     }
 }

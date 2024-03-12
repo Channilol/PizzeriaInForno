@@ -21,20 +21,20 @@ namespace PizzeriaInForno.Models
         // sulla configurazione e sull'utilizzo di un modello Code, vedere http://go.microsoft.com/fwlink/?LinkId=390109.
 
         // public virtual DbSet<MyEntity> MyEntities { get; set; }
-        public virtual DbSet<Prodotto> Prodotti { get; set; }
+        public virtual DbSet<Product> Products { get; set; }
 
-        public virtual DbSet<Utente> Utenti { get; set; }
+        public virtual DbSet<User> Users { get; set; }
 
-        public virtual DbSet<OrdineItem> OrdineItems { get; set; }
+        public virtual DbSet<OrderItem> OrderItems { get; set; }
 
-        public virtual DbSet<RiepilogoOrdine> RiepilogoOrdini { get; set; }
+        public virtual DbSet<OrderSummary> OrderSummaries { get; set; }
 
         //}
 
-    //public class MyEntity
-    //{
-    //    public int Id { get; set; }
-    //    public string Name { get; set; }
-    //}
-
+        //public class MyEntity
+        //{
+        //    public int Id { get; set; }
+        //    public string Name { get; set; }
+        //}
+    }
 }

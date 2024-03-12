@@ -5,13 +5,15 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
+using System.Web.Http;
 
 namespace PizzeriaInForno.Models
 {
-    public class Utente
+    [Authorize(Roles = "admin")]
+    public class User
     {
         [Key]
-        public int UtenteId { get; set; }
+        public int UserId { get; set; }
 
         [Required]
         [StringLength(255, ErrorMessage = "Max 255 caratteri")]
@@ -23,19 +25,17 @@ namespace PizzeriaInForno.Models
 
         [Required]
         [StringLength(30, ErrorMessage = "Max 30 caratteri")]
-        public string Nome { get; set; }
+        public string Name { get; set; }
 
         [Required]
         [StringLength(100, ErrorMessage = "Max 100 caratteri")]
-        public string Cognome { get; set; }
+        public string Surname { get; set; }
 
         [Required]
-        [Column(TypeName = "decimal(11,0)")]
-        public decimal Telefono { get; set; }
+        public string Phone { get; set; }
 
-        public string Ruolo { get; set; } = "user";
+        public string Role { get; set; } = "user";
 
-        public ICollection<OrdineItem> OrdineItems { get; set; }
-        public ICollection<RiepilogoOrdine> RiepilogoOrdini { get; set; }
+        public ICollection<OrderItem> OrderItems { get; set; }
     }
 }

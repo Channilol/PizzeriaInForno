@@ -36,6 +36,8 @@ namespace PizzeriaInForno.Models
 
         public string Role { get; set; } = "user";
 
-        public ICollection<OrderItem> OrderItems { get; set; }
+        //RELAZIONI
+
+        public ICollection<OrderSummary> OrderSummaries { get; set; }
     }
 }

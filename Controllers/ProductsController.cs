@@ -21,7 +21,6 @@ namespace PizzeriaInForno.Controllers
         }
 
         // GET: Products/Details/5
-        [Authorize]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -33,7 +32,8 @@ namespace PizzeriaInForno.Controllers
             {
                 return HttpNotFound();
             }
-            return View(product);
+            ViewBag.Product = product;
+            return View();
         }
 
         // GET: Products/Create

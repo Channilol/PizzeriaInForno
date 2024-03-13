@@ -15,15 +15,13 @@ namespace PizzeriaInForno.Controllers
         private DBContext db = new DBContext();
 
         // GET: OrderItems
-        [Authorize(Roles = "admin")]
         public ActionResult Index()
         {
-            var orderItems = db.OrderItems.Include(o => o.OrderSummary).Include(o => o.Product).Include(o => o.User);
+            var orderItems = db.OrderItems.Include(o => o.OrderSummary).Include(o => o.Product);
             return View(orderItems.ToList());
         }
 
         // GET: OrderItems/Details/5
-        [Authorize(Roles = "admin")]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -39,12 +37,10 @@ namespace PizzeriaInForno.Controllers
         }
 
         // GET: OrderItems/Create
-        [Authorize(Roles = "admin")]
         public ActionResult Create()
         {
             ViewBag.OrderSummaryId = new SelectList(db.OrderSummaries, "OrderSummaryId", "OrderDate");
             ViewBag.ProductId = new SelectList(db.Products, "ProductId", "ProductName");
-            ViewBag.UserId = new SelectList(db.Users, "UserId", "Email");
             return View();
         }
 
@@ -64,12 +60,10 @@ namespace PizzeriaInForno.Controllers
 
             ViewBag.OrderSummaryId = new SelectList(db.OrderSummaries, "OrderSummaryId", "OrderDate", orderItem.OrderSummaryId);
             ViewBag.ProductId = new SelectList(db.Products, "ProductId", "ProductName", orderItem.ProductId);
-            ViewBag.UserId = new SelectList(db.Users, "UserId", "Email", orderItem.UserId);
             return View(orderItem);
         }
 
         // GET: OrderItems/Edit/5
-        [Authorize(Roles = "admin")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -83,7 +77,6 @@ namespace PizzeriaInForno.Controllers
             }
             ViewBag.OrderSummaryId = new SelectList(db.OrderSummaries, "OrderSummaryId", "OrderDate", orderItem.OrderSummaryId);
             ViewBag.ProductId = new SelectList(db.Products, "ProductId", "ProductName", orderItem.ProductId);
-            ViewBag.UserId = new SelectList(db.Users, "UserId", "Email", orderItem.UserId);
             return View(orderItem);
         }
 
@@ -102,12 +95,10 @@ namespace PizzeriaInForno.Controllers
             }
             ViewBag.OrderSummaryId = new SelectList(db.OrderSummaries, "OrderSummaryId", "OrderDate", orderItem.OrderSummaryId);
             ViewBag.ProductId = new SelectList(db.Products, "ProductId", "ProductName", orderItem.ProductId);
-            ViewBag.UserId = new SelectList(db.Users, "UserId", "Email", orderItem.UserId);
             return View(orderItem);
         }
 
         // GET: OrderItems/Delete/5
-        [Authorize(Roles = "admin")]
         public ActionResult Delete(int? id)
         {
             if (id == null)

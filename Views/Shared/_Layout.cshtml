@@ -9,7 +9,6 @@
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
-
     <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark">
         <div class="container">
             @Html.ActionLink("Pizzeria IN FORNO", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
@@ -20,11 +19,11 @@
             <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
                 <ul class="navbar-nav flex-grow-1">
                     <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, new { @class = "nav-link" })</li>
-                    <li>@Html.ActionLink("Products", "Index", "Products", new { area = "" }, new { @class = "nav-link" })</li>
                     @if (HttpContext.Current.User.Identity.IsAuthenticated)
                     {
                         if (HttpContext.Current.User.IsInRole("admin"))
                         {
+                            <li>@Html.ActionLink("Products", "Index", "Products", new { area = "" }, new { @class = "nav-link" })</li>
                             <li>@Html.ActionLink("Users", "Index", "Users", new { area = "" }, new { @class = "nav-link" })</li>
                             <li>@Html.ActionLink("OrderItems", "Index", "OrderItems", new { area = "" }, new { @class = "nav-link" })</li>
                             <li>@Html.ActionLink("OrderSummaries", "Index", "OrderSummaries", new { area = "" }, new { @class = "nav-link" })</li>
@@ -35,10 +34,9 @@
                         }
                     }
                     else
-                    { 
+                    {
                         <li>@Html.ActionLink("Accedi o Registrati", "Login", "Auth", new { area = "" }, new { @class = "nav-link btn btn-primary text-light" })</li>
                     }
-                    @*<li>@Html.ActionLink("API", "Index", "Help", new { area = "" }, new { @class = "nav-link" })</li>*@
                 </ul>
             </div>
         </div>

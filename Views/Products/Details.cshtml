@@ -1,4 +1,4 @@
-﻿@model PizzeriaInForno.Models.Product
+﻿@model PizzeriaInForno.Models.OrderItem
 
 @{
     ViewBag.Title = "Details";
@@ -9,58 +9,28 @@
 <div>
     <h4>Product</h4>
     <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.ProductName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ProductName)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.ProductPhone)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ProductPhone)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.ProductPrice)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ProductPrice)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.PreparationTime)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.PreparationTime)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Ingredients)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Ingredients)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Category)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Category)
-        </dd>
-
-    </dl>
+    <div class="dl-horizontal d-flex">
+        <div>
+            <img src=@ViewBag.Product.ProductImage alt="" style="width: 400px" />
+        </div>
+        <div class="mx-3">
+            <h4>Prodotto</h4>
+            <p>@ViewBag.Product.ProductName</p>
+            <h4>Categoria</h4>
+            <p>@ViewBag.Product.Category</p>
+            <h4>Preparazione</h4>
+            <p>@ViewBag.Product.PreparationTime</p>
+            <h4>Ingredienti</h4>
+            <p>@ViewBag.Product.Ingredients</p>
+            <h4>Prezzo</h4>
+            <h5>@ViewBag.Product.ProductPrice€</h5>
+        </div>
+    </div>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.ProductId }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+@if (HttpContext.Current.User.IsInRole("admin"))
+{
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = ViewBag.Product.ProductId }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+}

@@ -31,11 +31,13 @@ namespace PizzeriaInForno.Controllers
         public ActionResult Login(User user)
         {
             var loggedUser = db.Users.Where(u => u.Email == user.Email && u.Password == user.Password).FirstOrDefault();
+
             if (loggedUser == null)
             {
                 TempData["LoginError"] = true;
                 return RedirectToAction("Login");
             }
+
             FormsAuthentication.SetAuthCookie(loggedUser.UserId.ToString(), true);
             return RedirectToAction("Index", "Home");
         }

@@ -12,6 +12,8 @@ namespace PizzeriaInForno.Models
         [Key]
         public int OrderSummaryId { get; set; }
 
+        public int UserId { get; set; }
+
         public string OrderDate { get; set; }
 
         public string OrderAddress { get; set; }
@@ -22,6 +24,10 @@ namespace PizzeriaInForno.Models
 
         public string State { get; set; }
 
+        //RELAZIONI
+
         public ICollection<OrderItem> OrderItems { get; set; }
+
+        public User User { get; set; }
     }
 }

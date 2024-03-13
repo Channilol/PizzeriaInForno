@@ -256,6 +256,8 @@
     <Content Include="Views\Products\Details.cshtml" />
     <Content Include="Views\Products\Edit.cshtml" />
     <Content Include="Views\Products\Index.cshtml" />
+    <Content Include="Views\Auth\Index.cshtml" />
+    <Content Include="Views\Auth\Login.cshtml" />
     <Content Include="Views\OrderItems\Create.cshtml" />
     <Content Include="Views\OrderItems\Delete.cshtml" />
     <Content Include="Views\OrderItems\Details.cshtml" />
@@ -266,8 +268,6 @@
     <Content Include="Views\OrderSummaries\Details.cshtml" />
     <Content Include="Views\OrderSummaries\Edit.cshtml" />
     <Content Include="Views\OrderSummaries\Index.cshtml" />
-    <Content Include="Views\Auth\Index.cshtml" />
-    <Content Include="Views\Auth\Login.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

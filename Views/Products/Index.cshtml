@@ -15,7 +15,7 @@
             @Html.DisplayNameFor(model => model.ProductName)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.ProductPhone)
+            @Html.DisplayNameFor(model => model.ProductImage)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.ProductPrice)
@@ -38,7 +38,7 @@
             @Html.DisplayFor(modelItem => item.ProductName)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.ProductPhone)
+            <img src=@item.ProductImage alt="" style="width: 150px; max-height: 100px">
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.ProductPrice)

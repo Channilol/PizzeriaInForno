@@ -18,7 +18,7 @@ namespace PizzeriaInForno.Models
 
         [Required]
         [StringLength(1000, ErrorMessage = "Max 1000 caratteri")]
-        public string ProductPhone { get; set; }
+        public string ProductImage { get; set; }
 
         [Required]
         [Range(1, 99, ErrorMessage = "Scegli un prezzo da 1€ a 99€")]
@@ -35,6 +35,8 @@ namespace PizzeriaInForno.Models
         [Required]
         [StringLength(255, ErrorMessage = "Devi scegliere una categoria!")]
         public string Category { get; set; }
+
+        //RELAZIONI
 
         public ICollection<OrderItem> OrderItems { get; set; }
     }

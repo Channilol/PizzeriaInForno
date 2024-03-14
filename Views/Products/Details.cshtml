@@ -4,10 +4,17 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
+
+@if (TempData["ProductSuccess"] != null)
+{
+    <div class="alert alert-success" role="alert">
+        Prodotto aggiunto all'ordine!
+    </div>
+}
+
+<h2>@ViewBag.Product.ProductName</h2>
 
 <div>
-    <h4>Product</h4>
     <hr />
     <div class="d-flex justify-content-between">
         <div class="d-flex">

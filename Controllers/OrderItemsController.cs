@@ -72,7 +72,7 @@ namespace PizzeriaInForno.Controllers
 
                 TempData["ProductSuccess"] = true;
 
-                return RedirectToAction("Index", "Home");             
+                return RedirectToAction("Details", "Products", new { id = id });             
             }
 
             return View(orderItem);

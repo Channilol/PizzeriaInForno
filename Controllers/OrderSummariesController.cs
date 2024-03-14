@@ -18,27 +18,24 @@ namespace PizzeriaInForno.Controllers
         [Authorize]
         public ActionResult Summary()
         {
+
             int userId = Convert.ToInt32(HttpContext.User.Identity.Name);
-            OrderSummary summary = db.OrderSummaries.Where(o => o.UserId == userId && o.State == "NON EVASO").FirstOrDefault();
+            OrderSummary summId = db.OrderSummaries.Where(o => o.UserId == userId && o.State == "NON EVASO").FirstOrDefault();
+            OrderSummary summary = db.OrderSummaries
+                                    .Include(o => o.OrderItems)
+                                    .Include(o => o.OrderItems.Select(i => i.Product))
+                                    .SingleOrDefault(o => o.OrderSummaryId == summId.OrderSummaryId);
             if (summary != null)
             {
-                var orderList = db.OrderItems.Where(o => o.OrderSummaryId == summary.OrderSummaryId).ToList();
-                if (orderList.Any())
-                {
-                    ViewBag.OrderList = orderList;
-                    ViewBag.SumPrice = db.OrderItems.Where(o => o.OrderSummaryId == summary.OrderSummaryId).Sum(o => o.ItemPrice);
-                }
-                else
-                {
-                    ViewBag.EmptyCart = true;
-                }
+                ViewBag.SumPrice = summary.OrderItems.Sum(i => i.ItemPrice);
                 return View(summary);
             }
             else
             {
-                return HttpNotFound();
+                return View();
             }
         }
+
 
         // GET: OrderSummaries
         [Authorize(Roles = "admin")]

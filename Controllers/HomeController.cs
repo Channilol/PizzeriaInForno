@@ -14,27 +14,31 @@ namespace PizzeriaInForno.Controllers
         public ActionResult Index()
         {
             ViewBag.Title = "Home Page";
-
-            if (HttpContext.User.Identity.IsAuthenticated)
-            {
-                string userId = HttpContext.User.Identity.Name;
-
-                var pastOrder = db.OrderSummaries.Where(o => o.UserId.ToString() == userId && o.State == "NON EVASO");
-
-                if (pastOrder.Any())
-                {
-                }
-                else
-                {
-                    OrderSummary newSummary = new OrderSummary();
-                    newSummary.UserId = Convert.ToInt32(userId);
-                    newSummary.State = "NON EVASO";
-                    db.OrderSummaries.Add(newSummary);
-                    db.SaveChanges();
-                }
-            }
-
+            OrderString();       
             return View(db.Products.ToList());
         }
+
+        public void OrderString()
+        {
+            if (HttpContext.User.Identity.IsAuthenticated)
+            {
+                int userId = Convert.ToInt32(HttpContext.User.Identity.Name);
+                using (DBContext db = new DBContext())
+                {
+                    OrderSummary Carrello = db.OrderSummaries.Where(c => c.UserId == userId && c.State == "NON EVASO").FirstOrDefault();
+                    if (Carrello == null)
+                    {
+                        OrderSummary newOrder = new OrderSummary
+                        {
+                            UserId = userId,
+                            State = "NON EVASO"
+                        };
+                        db.OrderSummaries.Add(newOrder);
+                        db.SaveChanges();
+                    }
+                }
+            }
+        }
+
     }
 }

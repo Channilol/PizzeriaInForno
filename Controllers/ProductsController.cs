@@ -17,6 +17,7 @@ namespace PizzeriaInForno.Controllers
 
         public ActionResult Index()
         {
+            OrderString();
             return View(db.Products.ToList());
         }
 
@@ -27,6 +28,7 @@ namespace PizzeriaInForno.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+            OrderString();
             Product product = db.Products.Find(id);
             if (product == null)
             {
@@ -118,6 +120,27 @@ namespace PizzeriaInForno.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
+        public void OrderString()
+        {
+            if (HttpContext.User.Identity.IsAuthenticated)
+            {
+                int userId = Convert.ToInt32(HttpContext.User.Identity.Name);
+                using (DBContext db = new DBContext())
+                {
+                    OrderSummary Carrello = db.OrderSummaries.Where(c => c.UserId == userId && c.State == "NON EVASO").FirstOrDefault();
+                    if (Carrello == null)
+                    {
+                        OrderSummary newOrder = new OrderSummary
+                        {
+                            UserId = userId,
+                            State = "NON EVASO"
+                        };
+                        db.OrderSummaries.Add(newOrder);
+                        db.SaveChanges();
+                    }
+                }
+            }
+        }
 
         protected override void Dispose(bool disposing)
         {
@@ -127,5 +150,6 @@ namespace PizzeriaInForno.Controllers
             }
             base.Dispose(disposing);
         }
+
     }
 }

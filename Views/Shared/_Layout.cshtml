@@ -1,12 +1,13 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
     <title>@ViewBag.Title - Applicazione ASP.NET</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    @RenderSection("styles", required: false)
 </head>
 <body>
     <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark">
@@ -28,6 +29,7 @@
                             <li>@Html.ActionLink("OrderItems", "Index", "OrderItems", new { area = "" }, new { @class = "nav-link" })</li>
                             <li>@Html.ActionLink("OrderSummaries", "Index", "OrderSummaries", new { area = "" }, new { @class = "nav-link" })</li>
                         }
+                        <li>@Html.ActionLink("Ordine", "Summary", "OrderSummaries", new { area = "" }, new { @class = "nav-link" })</li>
                         using (Html.BeginForm("Logout", "Auth"))
                         {
                             <button class="btn btn-danger">Logout</button>

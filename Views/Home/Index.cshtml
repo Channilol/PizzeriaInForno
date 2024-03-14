@@ -1,11 +1,41 @@
 ﻿@model IEnumerable<PizzeriaInForno.Models.Product>
 
+@{
+    ViewBag.Title = "HomePage";
+}
+
+@section styles {
+    <style>
+        .card:hover {
+            box-shadow: 0 0 10px #b5b5b5;
+            transform: scale(1.05);
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+        }
+    </style>
+}
+
+@if (TempData["ProductSuccess"] != null)
+{
+    <div class="alert alert-success" role="alert">
+        Prodotto aggiunto all'ordine!
+    </div>
+}
+
+@if (TempData["OrderSuccess"] != null)
+{
+    <div class="alert alert-success" role="alert">
+        L'ordine è stato effettuato con successo!
+    </div>
+}
+
+<div class="p-5 text-white bg-dark text-center">
+    <h1>Benvenuto alla Pizzeria In Forno!</h1>
+    <h3>La pizzeria migliore di Roma (anche meglio di quelle Gourmet)</h3>
+</div>
+
+
 <main>
-    <section class="row" aria-labelledby="aspnetTitle">
-        <h1 id="aspnetTitle">PIZZERIA IN FORNO</h1>
-        <p class="lead">La pizzeria migliore di Roma (anche meglio di quelle Gourmet)</p>
-    </section>
-    <div class="row g-3 justify-content-between">
+    <div class="row g-3 justify-content-evenly mt-2">
         @foreach (var item in Model)
         {
             <div class="card" style="width: 18rem;">

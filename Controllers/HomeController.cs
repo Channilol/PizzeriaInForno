@@ -18,6 +18,12 @@ namespace PizzeriaInForno.Controllers
             return View(db.Products.ToList());
         }
 
+        [Authorize(Roles = "admin")]
+        public ActionResult AsyncCalls() 
+        {
+            return View();
+        }
+
         public void OrderString()
         {
             if (HttpContext.User.Identity.IsAuthenticated)

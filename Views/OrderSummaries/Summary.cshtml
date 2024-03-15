@@ -4,7 +4,7 @@
     ViewBag.Title = "Summary";
 }
 
-@section styles 
+@section styles
 {
     <style>
         .summary {
@@ -18,6 +18,13 @@
     </style>
 }
 
+@if (TempData["ItemRemoved"] != null)
+{
+    <div class="alert alert-success" role="alert">
+        Prodotto rimosso con successo
+    </div>
+}
+
 <div class="container">
     <div class="summary">
         <h2>Dettagli Ordine</h2>
@@ -29,7 +36,7 @@
         <div class="d-flex flex-wrap justify-content-between">
             @foreach (var item in Model.OrderItems)
             {
-                <div class="card m-3" style="max-width: 450px; max-height: 150px;">
+                <div class="card m-3" style="max-width: 450px; max-height: 150px; overflow:hidden">
                     <div class="row g-0">
                         <div class="col-md-4">
                             <img src="@item.Product.ProductImage" class="rounded-start h-100 w-100" alt="...">
@@ -38,7 +45,14 @@
                             <div class="card-body">
                                 <h5 class="card-title">@item.Product.ProductName x @item.Quantity</h5>
                                 <p class="card-text">@item.Product.Category</p>
-                                <p class="card-text text-end">Prezzo: @item.ItemPrice€</p>
+                                <div class="d-flex justify-content-between">
+                                    <p class="card-text text-end">Prezzo: @item.ItemPrice€</p>
+                                    @using (Html.BeginForm("DeleteItem", "OrderSummaries", new { id = item.OrderItemId }, FormMethod.Post, new { @class = "d-inline" }))
+                                    {
+                                        @Html.AntiForgeryToken()
+                                        <button type="submit" class="btn btn-danger">Elimina</button>
+                                    }
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -55,12 +69,16 @@
                     {
                         @Html.AntiForgeryToken()
                         <div class="form-group">
+                            <h4>Data consegna:</h4>
+                            @Html.EditorFor(m => m.OrderDate, new { htmlAttributes = new { @class = "form-control", type = "datetime-local" } })
+                        </div>
+                        <div class="form-group">
                             <h4>Indirizzo di consegna:</h4>
                             @Html.EditorFor(m => m.OrderAddress, new { htmlAttributes = new { @class = "form-control" } })
                         </div>
                         <div class="form-group">
                             <h4>Note particolari:</h4>
-                            @Html.TextAreaFor(m => m.Note, new { @class = "form-control", rows = "3" })
+                            @Html.TextAreaFor(m => m.Note, new { @class = "form-control", rows = "3", placeholder = "Scrivi eventuali intolleranze e/o allergie" })
                         </div>
                         <button class="btn btn-primary mt-3">Conferma ordine</button>
                     }

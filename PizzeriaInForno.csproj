@@ -269,6 +269,7 @@
     <Content Include="Views\OrderSummaries\Edit.cshtml" />
     <Content Include="Views\OrderSummaries\Index.cshtml" />
     <Content Include="Views\OrderSummaries\Summary.cshtml" />
+    <Content Include="Views\Home\AsyncCalls.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

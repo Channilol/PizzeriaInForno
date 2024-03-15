@@ -113,7 +113,7 @@ namespace PizzeriaInForno.Controllers
         [HttpPost]
         [Authorize]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "OrderAddress,Note")] OrderSummary orderSummary, int id)
+        public ActionResult Edit([Bind(Include = "OrderAddress,Note,OrderDate")] OrderSummary orderSummary, int id)
         {
             if (id < 1)
             {
@@ -131,7 +131,7 @@ namespace PizzeriaInForno.Controllers
 
             if (ModelState.IsValid)
             {
-                orderToSend.OrderDate = DateTime.Now.ToString();
+                orderToSend.OrderDate = orderSummary.OrderDate;
                 orderToSend.TotalPrice = sumPrice;
                 orderToSend.State = "EVASO";
                 orderToSend.OrderAddress = orderSummary.OrderAddress;
@@ -176,6 +176,22 @@ namespace PizzeriaInForno.Controllers
             return RedirectToAction("Index");
         }
 
+        [Authorize]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteItem(int id)
+        {
+            OrderItem item = db.OrderItems.Find(id);
+            if (item != null)
+            {
+                db.OrderItems.Remove(item);
+                db.SaveChanges();
+                TempData["ItemRemoved"] = true;
+                return RedirectToAction("Summary");
+            }
+            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -183,6 +199,32 @@ namespace PizzeriaInForno.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        [Authorize(Roles = "Admin")] 
+        public ActionResult OrdiniEvasi()
+        {
+            var ordiniEvasi = db.OrderSummaries.Where(o => o.State == "EVASO").Count();
+            return Json(ordiniEvasi, JsonRequestBehavior.AllowGet);
+        }
+
+        [Authorize(Roles = "Admin")]
+        public ActionResult IncassiPerGiorno(int id)
+        {
+            var ordiniTotali = db.OrderSummaries.Where(o => o.State == "EVASO").ToList();
+            decimal incassoPerGiorno = 0;
+            foreach (var order in ordiniTotali)
+            {
+                string dateString = order.OrderDate.ToString();
+                string[] dataArray = dateString.Split('/');
+                int day = Convert.ToInt32(dataArray[0]);
+                if (day == id)
+                {
+                    incassoPerGiorno += order.TotalPrice;
+                }
+            }
+            
+            return Json(incassoPerGiorno, JsonRequestBehavior.AllowGet);
         }
     }
 }

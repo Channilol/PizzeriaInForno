@@ -11,6 +11,23 @@
             transform: scale(1.05);
             transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
         }
+
+        .AdminView {
+            width: 350px;
+            height: 150px;
+            background-color: #191919;
+            color: white;
+            box-sizing: border-box;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-evenly;
+        }
+
+        #giorno {
+            margin-right: 75px;
+        }
+
     </style>
 }
 
@@ -26,6 +43,27 @@
     <h3>La pizzeria migliore di Roma (anche meglio di quelle Gourmet)</h3>
 </div>
 
+@if (HttpContext.Current.User.IsInRole("admin"))
+{
+    <div class="d-flex justify-content-evenly my-3">
+        <div class="AdminView">
+            <h2>Totale ordini evasi:</h2>
+            <h4 id="numOrdiniEvasi"></h4>
+        </div>
+        <div class="AdminView">
+            <h2>Incassi per giorno:</h2>
+            <div class="d-flex">
+                <select name="giorno" id="giorno">
+                    @for (int i = 1; i < 32; i++)
+                    {
+                        <option value="@i">@i</option>
+                    }
+                </select>
+                <h4 id="incassiGiorno"></h4>
+            </div>
+        </div>
+    </div>
+}
 
 <main>
     <div class="row g-3 justify-content-evenly mt-2">
@@ -45,3 +83,47 @@
         }
     </div>
 </main>
+
+@section scripts 
+{
+    <script>
+        let ordiniEvasi = document.querySelector("#numOrdiniEvasi")
+        let giorni = document.querySelector("#giorno")
+        let incassiGiorno = document.querySelector("#incassiGiorno")
+        let currentUrl = window.location.href;
+
+        calcoloOrdiniEvasi();
+
+        async function calcoloOrdiniEvasi() {
+            try {
+                const res = await fetch(currentUrl + "/OrderSummaries/OrdiniEvasi")
+                if (res.ok) {
+                    const data = await res.json();
+                    ordiniEvasi.innerText = data;
+                }
+                else {
+                    console.log('Errore nel caricamento dei dati')
+                }
+            }
+            catch (err) {
+                console.log('ERRORE!', err)
+            }
+        }
+
+        giorni.addEventListener("change", async () => {
+            try {
+                const res = await fetch(currentUrl + "/OrderSummaries/IncassiPerGiorno/" + giorni.value);
+                if (res.ok) {
+                    const data = await res.json();
+                    incassiGiorno.innerText = data + "€";
+                }
+                else {
+                    console.log('Errore nel caricamento dei dati')
+                }
+            }
+            catch (err) {
+                console.log('ERRORE!', err)
+            }
+        })
+    </script>
+}
